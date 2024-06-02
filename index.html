@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="text-xl font-semibold text-gray-700">Dashboard</div>
+                <div>
+                    <a href="#" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="#" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Reports</a>
+                    <a href="#" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Settings</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto p-6">
+        <h1 class="text-4xl font-bold text-center mb-8">Analytics Dashboard</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Card 1 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+                <div class="p-4">
+                    <h2 class="text-2xl font-semibold mb-4">Chart Title 1</h2>
+                    <img src="{{ url_for('static', filename='chart1.png') }}" alt="Chart 1" class="w-full">
+                    <p class="mt-2 text-gray-600">Description or insights about the chart can go here.</p>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+                <div class="p-4">
+                    <h2 class="text-2xl font-semibold mb-4">Chart Title 2</h2>
+                    <img src="{{ url_for('static', filename='chart2.png') }}" alt="Chart 2" class="w-full">
+                    <p class="mt-2 text-gray-600">Description or insights about the chart can go here.</p>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+                <div class="p-4">
+                    <h2 class="text-2xl font-semibold mb-4">Chart Title 3</h2>
+                    <img src="{{ url_for('static', filename='chart3.png') }}" alt="Chart 3" class="w-full">
+                    <p class="mt-2 text-gray-600">Description or insights about the chart can go here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
