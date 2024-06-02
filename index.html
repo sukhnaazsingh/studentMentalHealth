@@ -13,8 +13,57 @@
                     snackbar.classList.add("hidden");
                 }, 3000);
             }
+
+            // Modal functionality
+            const modalButtons = document.querySelectorAll("[data-modal-target]");
+            const closeModalButtons = document.querySelectorAll("[data-close-button]");
+            const overlay = document.getElementById("overlay");
+
+            modalButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const modal = document.querySelector(button.dataset.modalTarget);
+                    openModal(modal);
+                });
+            });
+
+            closeModalButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const modal = button.closest(".modal");
+                    closeModal(modal);
+                });
+            });
+
+            overlay.addEventListener("click", () => {
+                const modals = document.querySelectorAll(".modal.active");
+                modals.forEach(modal => {
+                    closeModal(modal);
+                });
+            });
+
+            function openModal(modal) {
+                if (modal == null) return;
+                modal.classList.add("active");
+                overlay.classList.add("active");
+            }
+
+            function closeModal(modal) {
+                if (modal == null) return;
+                modal.classList.remove("active");
+                overlay.classList.remove("active");
+            }
         });
     </script>
+    <style>
+        .modal {
+            display: none;
+        }
+        .modal.active {
+            display: block;
+        }
+        #overlay.active {
+            display: block;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 <!-- Navigation Bar -->
@@ -65,7 +114,7 @@
     <!-- Plots -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Age Distribution Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#ageDistributionModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Age Distribution</h2>
                 {% if age_distribution_plot %}
@@ -77,7 +126,7 @@
         </div>
 
         <!-- Gender Distribution Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#genderDistributionModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Gender Distribution</h2>
                 {% if gender_distribution_plot %}
@@ -90,7 +139,7 @@
         </div>
 
         <!-- Study Per Year Distribution Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#studyPerYearModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Study Per Year</h2>
                 {% if study_per_year_distribution_plot %}
@@ -118,7 +167,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
         <!-- Anxiety by Depression Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#anxietyByDepressionModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Anxiety by Depression</h2>
                 {% if anxiety_by_depression_plot %}
@@ -131,7 +180,7 @@
         </div>
 
         <!-- Anxiety by Gender Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#anxietyByGenderModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Anxiety by Gender</h2>
                 {% if anxiety_by_gender_plot %}
@@ -144,7 +193,7 @@
         </div>
 
         <!-- Anxiety by Study Year Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#anxietyByStudyYearModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Anxiety by Study Year</h2>
                 {% if anxiety_by_study_year_plot %}
@@ -157,7 +206,7 @@
         </div>
 
         <!-- Depression by Study Year Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#depressionByStudyYearModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Depression by Study Year</h2>
                 {% if depression_by_study_year_plot %}
@@ -166,6 +215,114 @@
                 {% else %}
                     <p>No data available.</p>
                 {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="overlay" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden"></div>
+
+    <!-- Age Distribution Modal -->
+    <div id="ageDistributionModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Age Distribution</h2>
+                {% if age_distribution_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ age_distribution_plot }}" alt="Age Distribution">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="genderDistributionModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Gender Distribution</h2>
+                {% if gender_distribution_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ gender_distribution_plot }}"
+                         alt="Gender Distribution">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="studyPerYearModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Study Per Year</h2>
+                {% if study_per_year_distribution_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ study_per_year_distribution_plot }}"
+                         alt="Study Per Year">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="anxietyByDepressionModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Anxiety by Depression</h2>
+                {% if anxiety_by_depression_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ anxiety_by_depression_plot }}"
+                         alt="Anxiety by Depression">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="anxietyByGenderModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Anxiety by Gender</h2>
+                {% if anxiety_by_gender_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ anxiety_by_gender_plot }}"
+                         alt="Anxiety by Gender">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="anxietyByStudyYearModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Anxiety by Study Year</h2>
+                {% if anxiety_by_study_year_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ anxiety_by_study_year_plot }}"
+                         alt="Anxiety by Study Year">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="depressionByStudyYearModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Depression by Study Year</h2>
+                {% if depression_by_study_year_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ depression_by_study_year_plot }}"
+                         alt="Depression by Study Year">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
             </div>
         </div>
     </div>

@@ -78,6 +78,8 @@ def index():
     # Load data into pandas DataFrame
     df = pd.read_sql(query, engine)
 
+    img = io.BytesIO()
+
     # Display the first few rows of the DataFrame
     print(df.head())
 
@@ -139,7 +141,6 @@ def index():
     plt.title("Age distribution")
     plt.xlabel("Age")
     plt.ylabel("Frequency")
-    img = io.BytesIO()
     plt.savefig(img, format='png')
     img.seek(0)
     age_distribution_plot = base64.b64encode(img.getvalue()).decode()
@@ -151,7 +152,6 @@ def index():
     plt.pie(df.gender.value_counts(), explode=(0.025, 0.025), labels=df.gender.value_counts().index,
             colors=['skyblue', 'navajowhite'], autopct='%1.1f%%', startangle=180)
     plt.legend()
-    img = io.BytesIO()
     plt.savefig(img, format='png')
     img.seek(0)
     gender_distribution_plot = base64.b64encode(img.getvalue()).decode()
@@ -161,7 +161,6 @@ def index():
     plt.figure(figsize=(10, 10))
     sns.countplot(data=df, x='Your current year of Study', hue='gender')
     plt.title("Students studying in particular year")
-    img = io.BytesIO()
     plt.savefig(img, format='png')
     img.seek(0)
     study_per_year_distribution_plot = base64.b64encode(img.getvalue()).decode()
@@ -171,7 +170,6 @@ def index():
     plt.figure(figsize=(10, 10))
     sns.countplot(data=df, x='Do you have Anxiety?', hue='Do you have Depression?')
     plt.title("Anxiety by Depression")
-    img = io.BytesIO()
     plt.savefig(img, format='png')
     img.seek(0)
     anxiety_by_depression_plot = base64.b64encode(img.getvalue()).decode()
@@ -182,7 +180,6 @@ def index():
     sns.set_theme(style="darkgrid")
     sns.countplot(y="Do you have Anxiety?", hue="gender", data=df)
     plt.title("Anxiety by Gender")
-    img = io.BytesIO()
     plt.savefig(img, format='png')
     img.seek(0)
     anxiety_by_gender_plot = base64.b64encode(img.getvalue()).decode()
@@ -193,7 +190,6 @@ def index():
     sns.set_theme(style="darkgrid")
     sns.countplot(x="Do you have Anxiety?", hue="Your current year of Study", data=df)
     plt.title("Anxiety by study year")
-    img = io.BytesIO()
     plt.savefig(img, format='png')
     img.seek(0)
     anxiety_by_study_year_plot = base64.b64encode(img.getvalue()).decode()
@@ -204,7 +200,6 @@ def index():
     sns.set_theme(style="darkgrid")
     sns.countplot(x="Do you have Depression?", hue="Your current year of Study", data=df)
     plt.title("Depression by study year")
-    img = io.BytesIO()
     plt.savefig(img, format='png')
     img.seek(0)
     depression_by_study_year_plot = base64.b64encode(img.getvalue()).decode()
