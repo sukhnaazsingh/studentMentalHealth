@@ -8,7 +8,6 @@ import io
 import base64
 import os
 import json
-import numpy as np
 
 # Use a non-GUI backend for Matplotlib
 plt.switch_backend('Agg')
