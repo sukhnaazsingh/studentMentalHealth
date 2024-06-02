@@ -18,10 +18,10 @@ app.secret_key = 'supersecretkey'  # Necessary for flashing messages
 
 # Database connection details
 DB_NAME = "student_mental_health"
-DB_USER = "postgres"
-DB_PASSWORD = "postgres"
-DB_HOST = "localhost"
-DB_PORT = "5432"
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
 
 
 def set_kaggle_credentials():
