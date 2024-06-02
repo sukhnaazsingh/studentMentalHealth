@@ -24,13 +24,25 @@ DB_HOST = "localhost"
 DB_PORT = "5432"
 
 
-def load_data_from_kaggle():
-    # API credentials for Kaggle
-    with open('kaggle.json') as f:
-        data = json.load(f)
+def set_kaggle_credentials():
+    kaggle_username = os.getenv('KAGGLE_USERNAME')
+    kaggle_key = os.getenv('KAGGLE_KEY')
 
-    os.environ['KAGGLE_USERNAME'] = data['username']
-    os.environ['KAGGLE_KEY'] = data['key']
+    if not kaggle_username or not kaggle_key:
+        try:
+            with open('kaggle.json') as f:
+                data = json.load(f)
+                kaggle_username = data['username']
+                kaggle_key = data['key']
+        except FileNotFoundError:
+            raise FileNotFoundError("Kaggle credentials not found in environment variables or kaggle.json file")
+
+    os.environ['KAGGLE_USERNAME'] = kaggle_username
+    os.environ['KAGGLE_KEY'] = kaggle_key
+
+
+def load_data_from_kaggle():
+    set_kaggle_credentials()
 
     from kaggle.api.kaggle_api_extended import KaggleApi
 
