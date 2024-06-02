@@ -57,8 +57,14 @@ def load_data_from_kaggle():
     df = pd.read_csv('Student%20Mental%20health.csv', sep=',')
     print(df.head())
 
-    # Database connection details
-    engine = create_engine(f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
+    # Database connection details with connection pool
+    engine = create_engine(
+        f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}',
+        pool_size=10,
+        max_overflow=20,
+        pool_timeout=30,
+        pool_recycle=1800
+    )
 
     # Insert data into the table
     df.to_sql('student_mental_health', engine, if_exists='replace', index=False)
