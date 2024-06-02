@@ -362,68 +362,80 @@
     <!-- Filtered Data Table -->
     <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 mt-6">
         <h2 class="text-2xl font-semibold mb-4">Filtered Data: Engineering Students with Anxiety and Depression</h2>
-        <table class="min-w-full bg-white">
-            <thead>
-            <tr>
-                <th class="py-2">Timestamp</th>
-                <th class="py-2">Gender</th>
-                <th class="py-2">Age</th>
-                <th class="py-2">Course</th>
-                <th class="py-2">Year</th>
-                <th class="py-2">CGPA</th>
-                <th class="py-2">Married</th>
-                <th class="py-2">Depression</th>
-                <th class="py-2">Anxiety</th>
-                <th class="py-2">Panic Attack</th>
-                <th class="py-2">Treatment</th>
-                <th class="py-2">Average CGPA</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for entry in filtered_entries %}
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white">
+                <thead>
                 <tr>
-                    {% for field in entry %}
-                        <td class="border px-4 py-2">{{ field }}</td>
-                    {% endfor %}
+                    <th class="py-2">Timestamp</th>
+                    <th class="py-2">Gender</th>
+                    <th class="py-2">Age</th>
+                    <th class="py-2">Course</th>
+                    <th class="py-2">Year</th>
+                    <th class="py-2">CGPA</th>
+                    <th class="py-2">Married</th>
+                    <th class="py-2">Depression</th>
+                    <th class="py-2">Anxiety</th>
+                    <th class="py-2">Panic Attack</th>
+                    <th class="py-2">Treatment</th>
+                    <th class="py-2">Average CGPA</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for entry in filtered_entries %}
+                    <tr>
+                        {% for field in entry %}
+                            <td class="border px-4 py-2">{{ field }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
+
 
     <!-- Research Questions Section -->
     <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 mt-6">
         <h2 class="text-2xl font-semibold mb-4">Research Questions</h2>
-        <div>
-            <h3 class="text-xl font-semibold mb-2">How do depression and anxiety affect students' academic
-                performance (CGPA) of students?</h3>
-            <p>
-                The relationship between mental health issues, such as depression and anxiety, and academic performance
-                (CGPA) is complex. Our analysis revealed no clear correlation between these variables, primarily due to
-                the binary nature of the mental health data (yes/no) and the limited sample size. The binary
-                classification oversimplifies the complexities and severity of mental health conditions, while the
-                skewed distribution of CGPAs towards higher values (3.0 to 3.75) reduces the variability needed to
-                detect significant patterns. Additionally, academic performance is influenced by numerous factors,
-                including personal circumstances, support systems, and teaching quality, which were not accounted for in
-                the dataset. These confounding variables can obscure any potential direct relationship between mental
-                health and academic performance.
-            </p>
-        </div>
-        <div>
-            <h3 class="text-xl font-semibold mb-2">Gibt es Unterschiede in der akademischen Leistung (CGPA) zwischen
-                männlichen und weiblichen Studierenden, die unter Depression oder Angstzuständen leiden?</h3>
-            <p>
-                The CGPA analysis by year and gender reveals that there are no consistent differences in academic performance 
-                between male and female students experiencing depression or anxiety.
-            </p>
-        </div>
-        <div>
-            <h3 class="text-xl font-semibold mb-2">Gibt es Unterschiede in der Häufigkeit von Depression und
-                Angstzuständen unter Studierenden mit hoher versus niedriger akademischer Leistung (CGPA)?</h3>
-            <p>
-                Both the Chi-square test analysis and Pearson's regression analysis indicate no significant correlation 
-                between the frequency of depression and anxiety and students' academic performance.
-            </p>
+        <div class="space-y-6">
+            <div class="mt-6">
+                <h3 class="text-xl font-semibold mb-2">How do depression and anxiety affect students' academic
+                    performance (CGPA) of students?</h3>
+                <p>
+                    The relationship between mental health issues, such as depression and anxiety, and academic
+                    performance
+                    (CGPA) is complex. Our analysis revealed no clear correlation between these variables, primarily due
+                    to
+                    the binary nature of the mental health data (yes/no) and the limited sample size. The binary
+                    classification oversimplifies the complexities and severity of mental health conditions, while the
+                    skewed distribution of CGPAs towards higher values (3.0 to 3.75) reduces the variability needed to
+                    detect significant patterns. Additionally, academic performance is influenced by numerous factors,
+                    including personal circumstances, support systems, and teaching quality, which were not accounted
+                    for in
+                    the dataset. These confounding variables can obscure any potential direct relationship between
+                    mental
+                    health and academic performance.
+                </p>
+            </div>
+            <div class="mt-6">
+                <h3 class="text-xl font-semibold mb-2">Are there differences in academic performance (CGPA) between male
+                    and
+                    female students who suffer from depression or anxiety?</h3>
+                <p>
+                    The CGPA analysis by year and gender reveals that there are no consistent differences in academic
+                    performance
+                    between male and female students experiencing depression or anxiety.
+                </p>
+            </div>
+            <div class="mt-6">
+                <h3 class="text-xl font-semibold mb-2">Are there differences in the incidence of depression and anxiety
+                    among students with high versus low academic performance (CGPA)?</h3>
+                <p>
+                    Both the Chi-square test analysis and Pearson's regression analysis indicate no significant
+                    correlation
+                    between the frequency of depression and anxiety and students' academic performance.
+                </p>
+            </div>
         </div>
     </div>
 </div>
