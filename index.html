@@ -7,49 +7,144 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-    <!-- Navigation Bar -->
-    <nav class="bg-white shadow-lg">
-        <div class="container mx-auto px-6 py-3">
-            <div class="flex justify-between items-center">
-                <div class="text-xl font-semibold text-gray-700">Dashboard</div>
-                <div>
-                    <a href="#" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Reports</a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Settings</a>
-                </div>
+<!-- Navigation Bar -->
+<nav class="bg-white shadow-lg">
+    <div class="container mx-auto px-6 py-3">
+        <div class="flex justify-between items-center">
+            <div class="text-xl font-semibold text-gray-700">Analytics Dashboard</div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container mx-auto p-6">
+    <h1 class="text-4xl font-bold text-center mb-8">General Statistics</h1>
+
+    <!-- CGPA Averages by Year and Gender -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 mb-6">
+        <h2 class="text-2xl font-semibold mb-4">Average CGPA by Year and Gender</h2>
+        {% for year_data in avg_cgpa %}
+            <h3 class="text-xl font-semibold">{{ year_data.year }}</h3>
+            <p>Average CGPA for Female students: {{ year_data.female_avg }}</p>
+            <p>Average CGPA for Male students: {{ year_data.male_avg }}</p>
+        {% endfor %}
+    </div>
+
+    <!-- Plots -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Age Distribution Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Age Distribution</h2>
+                {% if age_distribution_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ age_distribution_plot }}" alt="Age Distribution">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
             </div>
         </div>
-    </nav>
 
-    <!-- Main Content -->
-    <div class="container mx-auto p-6">
-        <h1 class="text-4xl font-bold text-center mb-8">Analytics Dashboard</h1>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Card 1 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
-                <div class="p-4">
-                    <h2 class="text-2xl font-semibold mb-4">Chart Title 1</h2>
-                    <img src="{{ url_for('static', filename='chart1.png') }}" alt="Chart 1" class="w-full">
-                    <p class="mt-2 text-gray-600">Description or insights about the chart can go here.</p>
-                </div>
+        <!-- Gender Distribution Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Gender Distribution</h2>
+                {% if gender_distribution_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ gender_distribution_plot }}" alt="Gender Distribution">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
             </div>
-            <!-- Card 2 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
-                <div class="p-4">
-                    <h2 class="text-2xl font-semibold mb-4">Chart Title 2</h2>
-                    <img src="{{ url_for('static', filename='chart2.png') }}" alt="Chart 2" class="w-full">
-                    <p class="mt-2 text-gray-600">Description or insights about the chart can go here.</p>
-                </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
-                <div class="p-4">
-                    <h2 class="text-2xl font-semibold mb-4">Chart Title 3</h2>
-                    <img src="{{ url_for('static', filename='chart3.png') }}" alt="Chart 3" class="w-full">
-                    <p class="mt-2 text-gray-600">Description or insights about the chart can go here.</p>
-                </div>
+        </div>
+
+        <!-- Study Per Year Distribution Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Study Per Year</h2>
+                {% if study_per_year_distribution_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ study_per_year_distribution_plot }}" alt="Study Per Year">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
             </div>
         </div>
     </div>
+
+    <h1 class="text-4xl font-bold text-center mb-8 mt-8">Mental Health Analysis</h1>
+
+    <!-- Mental Health Analysis Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- General Statistics -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 mb-6">
+            <h2 class="text-2xl font-semibold mb-4">General Statistics</h2>
+            <p>Total students: {{ total_students }}</p>
+            <p>Students with Anxiety: {{ anxiety_count }} ({{ anxiety_count_percentage }}%)</p>
+            <p>Students with Depression: {{ depression_count }} ({{ depression_count_percentage }}%)</p>
+            <p>Students with both Anxiety and Depression: {{ both_count }} ({{ both_count_percentage }}%)</p>
+        </div>
+
+        <!-- Anxiety by Depression Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Anxiety by Depression</h2>
+                {% if anxiety_by_depression_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ anxiety_by_depression_plot }}" alt="Anxiety by Depression">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Anxiety by Gender Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Anxiety by Gender</h2>
+                {% if anxiety_by_gender_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ anxiety_by_gender_plot }}" alt="Anxiety by Gender">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Anxiety by Study Year Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Anxiety by Study Year</h2>
+                {% if anxiety_by_study_year_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ anxiety_by_study_year_plot }}" alt="Anxiety by Study Year">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Depression by Study Year Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Depression by Study Year</h2>
+                {% if depression_by_study_year_plot %}
+                    <img class="w-full" src="data:image/png;base64,{{ depression_by_study_year_plot }}" alt="Depression by Study Year">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Correlation and P-Value Analysis -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 mt-6">
+        <h2 class="text-2xl font-semibold mb-4">Correlation and P-Value Analysis</h2>
+        <p>Correlation between Age and CGPA: {{ correlation }}</p>
+        <p>P-Value: {{ p_value }}</p>
+    </div>
+
+    <!-- Chi-Square Test Results -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 mt-6">
+        <h2 class="text-2xl font-semibold mb-4">Chi-Square Test Results</h2>
+        <p>Chi-Square Test Statistic: {{ chi2 }}</p>
+        <p>P-Value: {{ p_value_chi2 }}</p>
+        <p>Degrees of Freedom: {{ dof }}</p>
+    </div>
+</div>
 </body>
 </html>
