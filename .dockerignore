@@ -3,3 +3,4 @@ kaggle.json
 .idea
 .ipynb_checkpoints
 .venv
+kaggle_api.py
