@@ -92,8 +92,9 @@ def index():
     print(df.isnull().sum())
 
     df.rename(columns={'Choose your gender': 'gender'}, inplace=True)
-
     df['Your current year of Study'] = df['Your current year of Study'].str.lower().str.capitalize()
+    years_of_study = df['Your current year of Study'].unique()
+    genders = df['gender'].unique()
 
     df['CGPA_gender'] = df['What is your CGPA?'].apply(
         lambda x: (float(x.split('-')[0].strip()) + float(x.split('-')[1].strip())) / 2)
@@ -110,8 +111,6 @@ def index():
     depression_count_percentage = (depression_count / total_students) * 100
     both_count_percentage = (both_count / total_students) * 100
 
-    years_of_study = df['Your current year of Study'].unique()
-    genders = df['gender'].unique()
     avg_cgpa = []
 
     for year in years_of_study:

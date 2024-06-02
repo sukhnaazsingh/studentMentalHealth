@@ -173,6 +173,15 @@
     <!-- Correlation and P-Value Analysis -->
     <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 mt-6">
         <h2 class="text-2xl font-semibold mb-4">Correlation and P-Value Analysis</h2>
+        <p>We wanted to calculate a p-value between two columns but we only had the age column that is numeric.</p>
+        <br/>
+        <p>In order to create a second column that is numeric we took the 'What is your CGPA' Column and through a
+            lambda function we calculated the mean value of the two string values</p>
+        <br/>
+        <p>After that we changed the 'What is your CGPA' to a float.</p>
+        <p>In the correlations analysis we compare the age and the cgpa of a student. The result is a very high p-value
+            which indicates between this two variables there is no statistical significant correlation</p>
+        <br/>
         <p>Correlation between Age and CGPA: {{ correlation }}</p>
         <p>P-Value: {{ p_value }}</p>
     </div>
