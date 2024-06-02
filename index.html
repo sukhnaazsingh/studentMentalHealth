@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics Dashboard</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const snackbar = document.getElementById("snackbar");
+            if (snackbar) {
+                setTimeout(() => {
+                    snackbar.classList.add("hidden");
+                }, 3000);
+            }
+        });
+    </script>
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 <!-- Navigation Bar -->
@@ -12,9 +22,31 @@
     <div class="container mx-auto px-6 py-3">
         <div class="flex justify-between items-center">
             <div class="text-xl font-semibold text-gray-700">Analytics Dashboard</div>
+            <div>
+                <a href="{{ url_for('index') }}"
+                   class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                <a href="{{ url_for('reload_data') }}"
+                   class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Reload Data</a>
+            </div>
         </div>
     </div>
 </nav>
+
+<!-- Notification Section -->
+<div class="container mx-auto mt-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="space-y-4">
+                {% for category, message in messages %}
+                    <div id="snackbar" style="z-index: 10000"
+                         class="bg-green-500 text-white p-4 rounded shadow-lg fixed bottom-4 left-1/2 transform -translate-x-1/2">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</div>
 
 <!-- Main Content -->
 <div class="container mx-auto p-6">
@@ -151,6 +183,38 @@
         <p>Chi-Square Test Statistic: {{ chi2 }}</p>
         <p>P-Value: {{ p_value_chi2 }}</p>
         <p>Degrees of Freedom: {{ dof }}</p>
+    </div>
+
+    <!-- Filtered Data Table -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 mt-6">
+        <h2 class="text-2xl font-semibold mb-4">Filtered Data: Engineering Students with Anxiety and Depression</h2>
+        <table class="min-w-full bg-white">
+            <thead>
+            <tr>
+                <th class="py-2">Timestamp</th>
+                <th class="py-2">Gender</th>
+                <th class="py-2">Age</th>
+                <th class="py-2">Course</th>
+                <th class="py-2">Year</th>
+                <th class="py-2">CGPA</th>
+                <th class="py-2">Married</th>
+                <th class="py-2">Depression</th>
+                <th class="py-2">Anxiety</th>
+                <th class="py-2">Panic Attack</th>
+                <th class="py-2">Treatment</th>
+                <th class="py-2">Average CGPA</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entry in filtered_entries %}
+                <tr>
+                    {% for field in entry %}
+                        <td class="border px-4 py-2">{{ field }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

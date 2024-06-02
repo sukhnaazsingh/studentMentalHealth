@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for, flash
 import pandas as pd
 import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
@@ -6,11 +6,58 @@ import seaborn as sns
 from scipy.stats import pearsonr, chi2_contingency
 import io
 import base64
+import os
+import json
 
 # Use a non-GUI backend for Matplotlib
 plt.switch_backend('Agg')
 
 app = Flask(__name__, template_folder='.')
+app.secret_key = 'supersecretkey'  # Necessary for flashing messages
+
+# Database connection details
+DB_NAME = "student_mental_health"
+DB_USER = "postgres"
+DB_PASSWORD = "postgres"
+DB_HOST = "localhost"
+DB_PORT = "5432"
+
+
+def load_data_from_kaggle():
+    # API credentials for Kaggle
+    with open('kaggle.json') as f:
+        data = json.load(f)
+
+    os.environ['KAGGLE_USERNAME'] = data['username']
+    os.environ['KAGGLE_KEY'] = data['key']
+
+    from kaggle.api.kaggle_api_extended import KaggleApi
+
+    # Initialize API
+    api = KaggleApi()
+    api.authenticate()
+
+    # Download file
+    api.dataset_download_file('shariful07/student-mental-health', 'Student Mental health.csv')
+
+    # Read data to pandas data frame
+    df = pd.read_csv('Student%20Mental%20health.csv', sep=',')
+    print(df.head())
+
+    # Database connection details
+    engine = create_engine(f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
+
+    # Insert data into the table
+    df.to_sql('student_mental_health', engine, if_exists='replace', index=False)
+
+    print("Data has been successfully inserted into the database.")
+
+
+@app.route('/reload-data')
+def reload_data():
+    load_data_from_kaggle()
+    flash('Data has been successfully reloaded!', 'success')
+    return redirect(url_for('index'))
 
 
 @app.route('/')
@@ -46,7 +93,7 @@ def index():
 
     df.rename(columns={'Choose your gender': 'gender'}, inplace=True)
 
-    df['Year of Study'] = df['Your current year of Study'].str.lower().str.capitalize()
+    df['Your current year of Study'] = df['Your current year of Study'].str.lower().str.capitalize()
 
     df['CGPA_gender'] = df['What is your CGPA?'].apply(
         lambda x: (float(x.split('-')[0].strip()) + float(x.split('-')[1].strip())) / 2)
@@ -63,14 +110,14 @@ def index():
     depression_count_percentage = (depression_count / total_students) * 100
     both_count_percentage = (both_count / total_students) * 100
 
-    years_of_study = df['Year of Study'].unique()
+    years_of_study = df['Your current year of Study'].unique()
     genders = df['gender'].unique()
     avg_cgpa = []
 
     for year in years_of_study:
         year_data = {'year': year}
         for gender in genders:
-            gender_year_df = df[(df['Year of Study'] == year) & (df['gender'] == gender)]
+            gender_year_df = df[(df['Your current year of Study'] == year) & (df['gender'] == gender)]
 
             if gender_year_df.empty:
                 print(f"No data for {gender} students in year {year}")
@@ -113,7 +160,7 @@ def index():
 
     # Create study per year distribution plot
     plt.figure(figsize=(10, 10))
-    sns.countplot(data=df, x='Year of Study', hue='gender')
+    sns.countplot(data=df, x='Your current year of Study', hue='gender')
     plt.title("Students studying in particular year")
     img = io.BytesIO()
     plt.savefig(img, format='png')
@@ -145,7 +192,7 @@ def index():
     # Create anxiety by study year plot
     plt.figure(figsize=(10, 10))
     sns.set_theme(style="darkgrid")
-    sns.countplot(x="Do you have Anxiety?", hue="Year of Study", data=df)
+    sns.countplot(x="Do you have Anxiety?", hue="Your current year of Study", data=df)
     plt.title("Anxiety by study year")
     img = io.BytesIO()
     plt.savefig(img, format='png')
@@ -156,7 +203,7 @@ def index():
     # Create depression by study year plot
     plt.figure(figsize=(10, 10))
     sns.set_theme(style="darkgrid")
-    sns.countplot(x="Do you have Depression?", hue="Year of Study", data=df)
+    sns.countplot(x="Do you have Depression?", hue="Your current year of Study", data=df)
     plt.title("Depression by study year")
     img = io.BytesIO()
     plt.savefig(img, format='png')
@@ -188,7 +235,8 @@ def index():
 
     print(f"Chi-square test results:\nChi2: {chi2}\nP-value: {p}\nDegrees of freedom: {dof}")
 
-    return render_template('index.html', total_students=total_students,
+    return render_template('index.html',
+                           total_students=total_students,
                            anxiety_count=anxiety_count, anxiety_count_percentage=anxiety_count_percentage,
                            depression_count=depression_count, depression_count_percentage=depression_count_percentage,
                            both_count=both_count, both_count_percentage=both_count_percentage,
@@ -201,7 +249,7 @@ def index():
                            anxiety_by_study_year_plot=anxiety_by_study_year_plot,
                            depression_by_study_year_plot=depression_by_study_year_plot,
                            correlation=correlation, p_value=p_value,
-                           chi2=chi2, p_value_chi2=p, dof=dof)
+                           chi2=chi2, p_value_chi2=p, dof=dof, filtered_entries=filtered_entries)
 
 
 if __name__ == '__main__':
