@@ -220,7 +220,7 @@ def plot_cgpa_groups(df):
     return high_cgpa_depression, low_cgpa_depression, high_cgpa_anxiety, low_cgpa_anxiety
 
 
-@app.route('/')
+@app.route('/home')
 def index():
     # Create database engine
     engine = create_engine(f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
