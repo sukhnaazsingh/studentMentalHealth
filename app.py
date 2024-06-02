@@ -66,26 +66,36 @@ def analyze_data(df):
     df = df.dropna(how='any', axis=0)
 
     # Rename columns for easier access
-    df.rename(columns={'Choose your gender': 'gender'}, inplace=True)
+    df.rename(columns={'Choose your gender': 'gender',
+                       'What is your course?': 'course',
+                       'Your current year of Study': 'year',
+                       'Age': 'age',
+                       'What is your CGPA?': 'cgpa',
+                       'Marital status': 'marital_status',
+                       'Do you have Depression?': 'depression',
+                       'Do you have Anxiety?': 'anxiety',
+                       'Do you have Panic attack?': 'panic_attack',
+                       'Did you seek any specialist for a treatment?': 'seek_any_specialist_for_treatment'},
+              inplace=True)
 
-    # Standardize the 'Your current year of Study' column
-    df['Your current year of Study'] = df['Your current year of Study'].str.lower().str.capitalize()
+    # Standardize the 'year' column
+    df['year'] = df['year'].str.lower().str.capitalize()
 
     # Calculate the average CGPA and convert to float
-    df['CGPA_average'] = df['What is your CGPA?'].apply(
+    df['CGPA_average'] = df['cgpa'].apply(
         lambda x: (float(x.split('-')[0].strip()) + float(x.split('-')[1].strip())) / 2)
     df['CGPA_average'] = df['CGPA_average'].astype(float)
 
     # Convert categorical columns to binary numeric values
-    df['Do you have Depression?'] = df['Do you have Depression?'].map({'Yes': 1, 'No': 0})
-    df['Do you have Anxiety?'] = df['Do you have Anxiety?'].map({'Yes': 1, 'No': 0})
+    df['depression'] = df['depression'].map({'Yes': 1, 'No': 0})
+    df['anxiety'] = df['anxiety'].map({'Yes': 1, 'No': 0})
 
     return df
 
 
 def plot_academic_performance(df):
     plt.figure(figsize=(10, 6))
-    sns.regplot(x='CGPA_average', y='Do you have Depression?', data=df, logistic=True)
+    sns.regplot(x='CGPA_average', y='depression', data=df, logistic=True)
     plt.title('Correlation between CGPA and Depression')
     plt.xlabel('CGPA')
     plt.ylabel('Depression (Yes=1, No=0)')
@@ -96,7 +106,7 @@ def plot_academic_performance(df):
     plt.close()
 
     plt.figure(figsize=(10, 6))
-    sns.regplot(x='CGPA_average', y='Do you have Anxiety?', data=df, logistic=True)
+    sns.regplot(x='CGPA_average', y='anxiety', data=df, logistic=True)
     plt.title('Correlation between CGPA and Anxiety')
     plt.xlabel('CGPA')
     plt.ylabel('Anxiety (Yes=1, No=0)')
@@ -111,7 +121,7 @@ def plot_academic_performance(df):
 
 def plot_gender_differences(df):
     plt.figure(figsize=(10, 6))
-    sns.lmplot(x='CGPA_average', y='Do you have Depression?', hue='gender', data=df, logistic=True)
+    sns.lmplot(x='CGPA_average', y='depression', hue='gender', data=df, logistic=True)
     plt.title('Correlation between CGPA and Depression by Gender')
     plt.xlabel('CGPA')
     plt.ylabel('Depression (Yes=1, No=0)')
@@ -122,7 +132,7 @@ def plot_gender_differences(df):
     plt.close()
 
     plt.figure(figsize=(10, 6))
-    sns.lmplot(x='CGPA_average', y='Do you have Anxiety?', hue='gender', data=df, logistic=True)
+    sns.lmplot(x='CGPA_average', y='anxiety', hue='gender', data=df, logistic=True)
     plt.title('Correlation between CGPA and Anxiety by Gender')
     plt.xlabel('CGPA')
     plt.ylabel('Anxiety (Yes=1, No=0)')
@@ -139,8 +149,8 @@ def plot_cgpa_groups(df):
     high_cgpa = df[df['CGPA_average'] >= df['CGPA_average'].median()]
     low_cgpa = df[df['CGPA_average'] < df['CGPA_average'].median()]
 
-    high_cgpa_counts = high_cgpa['Do you have Depression?'].value_counts(normalize=True)
-    low_cgpa_counts = low_cgpa['Do you have Depression?'].value_counts(normalize=True)
+    high_cgpa_counts = high_cgpa['depression'].value_counts(normalize=True)
+    low_cgpa_counts = low_cgpa['depression'].value_counts(normalize=True)
 
     plt.figure(figsize=(10, 6))
     sns.barplot(x=high_cgpa_counts.index, y=high_cgpa_counts.values)
@@ -164,8 +174,8 @@ def plot_cgpa_groups(df):
     low_cgpa_depression = base64.b64encode(img.getvalue()).decode()
     plt.close()
 
-    high_cgpa_counts = high_cgpa['Do you have Anxiety?'].value_counts(normalize=True)
-    low_cgpa_counts = low_cgpa['Do you have Anxiety?'].value_counts(normalize=True)
+    high_cgpa_counts = high_cgpa['anxiety'].value_counts(normalize=True)
+    low_cgpa_counts = low_cgpa['anxiety'].value_counts(normalize=True)
 
     plt.figure(figsize=(10, 6))
     sns.barplot(x=high_cgpa_counts.index, y=high_cgpa_counts.values)
@@ -211,21 +221,21 @@ def index():
 
     # Other statistics
     total_students = len(df)
-    anxiety_count = len(df[df['Do you have Anxiety?'] == 1])
-    depression_count = len(df[df['Do you have Depression?'] == 1])
-    both_count = len(df[(df['Do you have Anxiety?'] == 1) & (df['Do you have Depression?'] == 1)])
+    anxiety_count = len(df[df['anxiety'] == 1])
+    depression_count = len(df[df['depression'] == 1])
+    both_count = len(df[(df['anxiety'] == 1) & (df['depression'] == 1)])
     anxiety_count_percentage = (anxiety_count / total_students) * 100
     depression_count_percentage = (depression_count / total_students) * 100
     both_count_percentage = (both_count / total_students) * 100
 
-    years_of_study = df['Your current year of Study'].unique()
+    years_of_study = df['year'].unique()
     genders = df['gender'].unique()
     avg_cgpa = []
 
     for year in years_of_study:
         year_data = {'year': year}
         for gender in genders:
-            gender_year_df = df[(df['Your current year of Study'] == year) & (df['gender'] == gender)]
+            gender_year_df = df[(df['year'] == year) & (df['gender'] == gender)]
 
             if gender_year_df.empty:
                 print(f"No data for {gender} students in year {year}")
@@ -244,7 +254,7 @@ def index():
 
     # Create age distribution plot with axis labels
     plt.figure(figsize=(10, 10))
-    plt.hist(df['Age'], color='b')
+    plt.hist(df['age'], color='b')
     plt.title("Age distribution")
     plt.xlabel("Age")
     plt.ylabel("Frequency")
@@ -268,7 +278,7 @@ def index():
 
     # Create study per year distribution plot
     plt.figure(figsize=(10, 10))
-    sns.countplot(data=df, x='Your current year of Study', hue='gender')
+    sns.countplot(data=df, x='year', hue='gender')
     plt.title("Students studying in particular year")
     img = io.BytesIO()
     plt.savefig(img, format='png')
@@ -278,7 +288,7 @@ def index():
 
     # Create anxiety by depression plot
     plt.figure(figsize=(10, 10))
-    sns.countplot(data=df, x='Do you have Anxiety?', hue='Do you have Depression?')
+    sns.countplot(data=df, x='anxiety', hue='depression')
     plt.title("Anxiety by Depression")
     img = io.BytesIO()
     plt.savefig(img, format='png')
@@ -289,7 +299,7 @@ def index():
     # Create anxiety by gender plot
     plt.figure(figsize=(10, 10))
     sns.set_theme(style="darkgrid")
-    sns.countplot(y="Do you have Anxiety?", hue="gender", data=df)
+    sns.countplot(y="anxiety", hue="gender", data=df)
     plt.title("Anxiety by Gender")
     img = io.BytesIO()
     plt.savefig(img, format='png')
@@ -300,7 +310,7 @@ def index():
     # Create anxiety by study year plot
     plt.figure(figsize=(10, 10))
     sns.set_theme(style="darkgrid")
-    sns.countplot(x="Do you have Anxiety?", hue="Your current year of Study", data=df)
+    sns.countplot(x="anxiety", hue="year", data=df)
     plt.title("Anxiety by study year")
     img = io.BytesIO()
     plt.savefig(img, format='png')
@@ -311,7 +321,7 @@ def index():
     # Create depression by study year plot
     plt.figure(figsize=(10, 10))
     sns.set_theme(style="darkgrid")
-    sns.countplot(x="Do you have Depression?", hue="Your current year of Study", data=df)
+    sns.countplot(x="depression", hue="year", data=df)
     plt.title("Depression by study year")
     img = io.BytesIO()
     plt.savefig(img, format='png')
@@ -320,13 +330,13 @@ def index():
     plt.close()
 
     # Filtering and converting to a list
-    filtered_df = df[(df['What is your course?'] == 'Engineering') & (df['Do you have Anxiety?'] == 1) & (
-            df['Do you have Depression?'] == 1)]
+    filtered_df = df[(df['course'] == 'Engineering') & (df['anxiety'] == 1) & (
+            df['depression'] == 1)]
     filtered_entries = filtered_df.values.tolist()
 
     # P-Value Analysis
     # Calculate the correlation and p-value
-    correlation, p_value = pearsonr(df['Age'], df['CGPA_average'])
+    correlation, p_value = pearsonr(df['age'], df['CGPA_average'])
     correlation = float("{:.2f}".format(correlation))
     p_value = float("{:.2f}".format(p_value))
 
@@ -335,7 +345,7 @@ def index():
     print("P-value:", p_value)
 
     # Statistical analysis: Chi-square test for independence between Anxiety and Depression
-    contingency_table = pd.crosstab(df['Do you have Anxiety?'], df['Do you have Depression?'])
+    contingency_table = pd.crosstab(df['anxiety'], df['depression'])
     chi2, p, dof, expected = chi2_contingency(contingency_table)
     chi2 = float("{:.2f}".format(chi2))
     p = float("{:.2f}".format(p))
