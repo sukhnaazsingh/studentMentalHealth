@@ -10,7 +10,7 @@ Welcome to the Student Mental Health Analysis Flask Application! This applicatio
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Python 3.8 or higher
+- Python 3.9 or higher
 - Flask
 - Docker (if running in a Docker container)
 - Kaggle account with `kaggle.json` API key
@@ -65,6 +65,8 @@ Welcome to the Student Mental Health Analysis Flask Application! This applicatio
 ## 🌐 Live Demo
 
 You can check out the live demo of the application here: [Student Mental Health Analysis](https://studentmentalhealth.onrender.com/home)
+
+⚠️ Caution! The app takes a little bit to load because of render free tier.
 
 ## 📂 Project Structure
 ```
