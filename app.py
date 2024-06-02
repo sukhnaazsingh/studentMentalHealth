@@ -91,8 +91,8 @@ def index():
     plt.figure(figsize=(10, 10))
     plt.hist(df['Age'], color='b')
     plt.title("Age distribution")
-    plt.xlabel("Age")  # Add x-axis label
-    plt.ylabel("Frequency")  # Add y-axis label
+    plt.xlabel("Age")
+    plt.ylabel("Frequency")
     img = io.BytesIO()
     plt.savefig(img, format='png')
     img.seek(0)
@@ -172,6 +172,8 @@ def index():
     # P-Value Analysis
     # Calculate the correlation and p-value
     correlation, p_value = pearsonr(df['Age'], df['CGPA_gender'])
+    correlation = float("{:.2f}".format(correlation))
+    p_value = float("{:.2f}".format(p_value))
 
     # Print the correlation and p-value
     print("Correlation:", correlation)
@@ -180,6 +182,9 @@ def index():
     # Statistical analysis: Chi-square test for independence between Anxiety and Depression
     contingency_table = pd.crosstab(df['Do you have Anxiety?'], df['Do you have Depression?'])
     chi2, p, dof, expected = chi2_contingency(contingency_table)
+    chi2 = float("{:.2f}".format(chi2))
+    p = float("{:.2f}".format(p))
+    dof = float("{:.2f}".format(dof))
 
     print(f"Chi-square test results:\nChi2: {chi2}\nP-value: {p}\nDegrees of freedom: {dof}")
 
