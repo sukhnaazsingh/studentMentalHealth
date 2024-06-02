@@ -57,9 +57,11 @@
         .modal {
             display: none;
         }
+
         .modal.active {
             display: block;
         }
+
         #overlay.active {
             display: block;
         }
@@ -114,7 +116,8 @@
     <!-- Plots -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Age Distribution Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#ageDistributionModal">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#ageDistributionModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Age Distribution</h2>
                 {% if age_distribution_plot %}
@@ -126,7 +129,8 @@
         </div>
 
         <!-- Gender Distribution Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#genderDistributionModal">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#genderDistributionModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Gender Distribution</h2>
                 {% if gender_distribution_plot %}
@@ -139,7 +143,8 @@
         </div>
 
         <!-- Study Per Year Distribution Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#studyPerYearModal">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#studyPerYearModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Study Per Year</h2>
                 {% if study_per_year_distribution_plot %}
@@ -167,7 +172,8 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
         <!-- Anxiety by Depression Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#anxietyByDepressionModal">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#anxietyByDepressionModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Anxiety by Depression</h2>
                 {% if anxiety_by_depression_plot %}
@@ -180,7 +186,8 @@
         </div>
 
         <!-- Anxiety by Gender Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#anxietyByGenderModal">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#anxietyByGenderModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Anxiety by Gender</h2>
                 {% if anxiety_by_gender_plot %}
@@ -193,7 +200,8 @@
         </div>
 
         <!-- Anxiety by Study Year Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#anxietyByStudyYearModal">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#anxietyByStudyYearModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Anxiety by Study Year</h2>
                 {% if anxiety_by_study_year_plot %}
@@ -206,7 +214,8 @@
         </div>
 
         <!-- Depression by Study Year Plot -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer" data-modal-target="#depressionByStudyYearModal">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#depressionByStudyYearModal">
             <div class="p-4">
                 <h2 class="text-2xl font-semibold mb-4">Depression by Study Year</h2>
                 {% if depression_by_study_year_plot %}
@@ -215,114 +224,6 @@
                 {% else %}
                     <p>No data available.</p>
                 {% endif %}
-            </div>
-        </div>
-    </div>
-
-    <!-- Modals -->
-    <div id="overlay" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden"></div>
-
-    <!-- Age Distribution Modal -->
-    <div id="ageDistributionModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
-            <div class="p-4">
-                <h2 class="text-2xl font-semibold mb-4">Age Distribution</h2>
-                {% if age_distribution_plot %}
-                    <img class="w-full" src="data:image/png;base64,{{ age_distribution_plot }}" alt="Age Distribution">
-                {% else %}
-                    <p>No data available.</p>
-                {% endif %}
-                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="genderDistributionModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
-            <div class="p-4">
-                <h2 class="text-2xl font-semibold mb-4">Gender Distribution</h2>
-                {% if gender_distribution_plot %}
-                    <img class="w-full" src="data:image/png;base64,{{ gender_distribution_plot }}"
-                         alt="Gender Distribution">
-                {% else %}
-                    <p>No data available.</p>
-                {% endif %}
-                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="studyPerYearModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
-            <div class="p-4">
-                <h2 class="text-2xl font-semibold mb-4">Study Per Year</h2>
-                {% if study_per_year_distribution_plot %}
-                    <img class="w-full" src="data:image/png;base64,{{ study_per_year_distribution_plot }}"
-                         alt="Study Per Year">
-                {% else %}
-                    <p>No data available.</p>
-                {% endif %}
-                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="anxietyByDepressionModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
-            <div class="p-4">
-                <h2 class="text-2xl font-semibold mb-4">Anxiety by Depression</h2>
-                {% if anxiety_by_depression_plot %}
-                    <img class="w-full" src="data:image/png;base64,{{ anxiety_by_depression_plot }}"
-                         alt="Anxiety by Depression">
-                {% else %}
-                    <p>No data available.</p>
-                {% endif %}
-                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="anxietyByGenderModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
-            <div class="p-4">
-                <h2 class="text-2xl font-semibold mb-4">Anxiety by Gender</h2>
-                {% if anxiety_by_gender_plot %}
-                    <img class="w-full" src="data:image/png;base64,{{ anxiety_by_gender_plot }}"
-                         alt="Anxiety by Gender">
-                {% else %}
-                    <p>No data available.</p>
-                {% endif %}
-                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="anxietyByStudyYearModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
-            <div class="p-4">
-                <h2 class="text-2xl font-semibold mb-4">Anxiety by Study Year</h2>
-                {% if anxiety_by_study_year_plot %}
-                    <img class="w-full" src="data:image/png;base64,{{ anxiety_by_study_year_plot }}"
-                         alt="Anxiety by Study Year">
-                {% else %}
-                    <p>No data available.</p>
-                {% endif %}
-                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="depressionByStudyYearModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
-            <div class="p-4">
-                <h2 class="text-2xl font-semibold mb-4">Depression by Study Year</h2>
-                {% if depression_by_study_year_plot %}
-                    <img class="w-full" src="data:image/png;base64,{{ depression_by_study_year_plot }}"
-                         alt="Depression by Study Year">
-                {% else %}
-                    <p>No data available.</p>
-                {% endif %}
-                <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
             </div>
         </div>
     </div>
@@ -330,15 +231,6 @@
     <!-- Correlation and P-Value Analysis -->
     <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 mt-6">
         <h2 class="text-2xl font-semibold mb-4">Correlation and P-Value Analysis</h2>
-        <p>We wanted to calculate a p-value between two columns but we only had the age column that is numeric.</p>
-        <br/>
-        <p>In order to create a second column that is numeric we took the 'What is your CGPA' Column and through a
-            lambda function we calculated the mean value of the two string values</p>
-        <br/>
-        <p>After that we changed the 'What is your CGPA' to a float.</p>
-        <p>In the correlations analysis we compare the age and the cgpa of a student. The result is a very high p-value
-            which indicates between this two variables there is no statistical significant correlation</p>
-        <br/>
         <p>Correlation between Age and CGPA: {{ correlation }}</p>
         <p>P-Value: {{ p_value }}</p>
     </div>
@@ -349,6 +241,122 @@
         <p>Chi-Square Test Statistic: {{ chi2 }}</p>
         <p>P-Value: {{ p_value_chi2 }}</p>
         <p>Degrees of Freedom: {{ dof }}</p>
+    </div>
+
+    <!-- Additional Plots -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+
+        <!-- Depression vs CGPA Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#depressionVsCgpaModal">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Effect of Depression on CGPA</h2>
+                {% if depression_vs_cgpa %}
+                    <img class="w-full" src="data:image/png;base64,{{ depression_vs_cgpa }}"
+                         alt="Effect of Depression on CGPA">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Anxiety vs CGPA Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#anxietyVsCgpaModal">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Effect of Anxiety on CGPA</h2>
+                {% if anxiety_vs_cgpa %}
+                    <img class="w-full" src="data:image/png;base64,{{ anxiety_vs_cgpa }}"
+                         alt="Effect of Anxiety on CGPA">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Gender Depression vs CGPA Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#genderDepressionVsCgpaModal">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Gender Differences in CGPA with Depression</h2>
+                {% if gender_depression_vs_cgpa %}
+                    <img class="w-full" src="data:image/png;base64,{{ gender_depression_vs_cgpa }}"
+                         alt="Gender Differences in CGPA with Depression">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Gender Anxiety vs CGPA Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#genderAnxietyVsCgpaModal">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Gender Differences in CGPA with Anxiety</h2>
+                {% if gender_anxiety_vs_cgpa %}
+                    <img class="w-full" src="data:image/png;base64,{{ gender_anxiety_vs_cgpa }}"
+                         alt="Gender Differences in CGPA with Anxiety">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- High CGPA Depression Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#highCgpaDepressionModal">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Depression Prevalence in High CGPA Students</h2>
+                {% if high_cgpa_depression %}
+                    <img class="w-full" src="data:image/png;base64,{{ high_cgpa_depression }}"
+                         alt="Depression Prevalence in High CGPA Students">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Low CGPA Depression Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#lowCgpaDepressionModal">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Depression Prevalence in Low CGPA Students</h2>
+                {% if low_cgpa_depression %}
+                    <img class="w-full" src="data:image/png;base64,{{ low_cgpa_depression }}"
+                         alt="Depression Prevalence in Low CGPA Students">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- High CGPA Anxiety Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#highCgpaAnxietyModal">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Anxiety Prevalence in High CGPA Students</h2>
+                {% if high_cgpa_anxiety %}
+                    <img class="w-full" src="data:image/png;base64,{{ high_cgpa_anxiety }}"
+                         alt="Anxiety Prevalence in High CGPA Students">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Low CGPA Anxiety Plot -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition hover:scale-105 cursor-pointer"
+             data-modal-target="#lowCgpaAnxietyModal">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold mb-4">Anxiety Prevalence in Low CGPA Students</h2>
+                {% if low_cgpa_anxiety %}
+                    <img class="w-full" src="data:image/png;base64,{{ low_cgpa_anxiety }}"
+                         alt="Anxiety Prevalence in Low CGPA Students">
+                {% else %}
+                    <p>No data available.</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
 
     <!-- Filtered Data Table -->
@@ -382,6 +390,278 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Research Questions Section -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 mt-6">
+        <h2 class="text-2xl font-semibold mb-4">Research Questions</h2>
+        <div>
+            <h3 class="text-xl font-semibold mb-2">How do depression and anxiety affect students' academic
+                performance (CGPA) of students?</h3>
+            <p>
+                The relationship between mental health issues, such as depression and anxiety, and academic performance
+                (CGPA) is complex. Our analysis revealed no clear correlation between these variables, primarily due to
+                the binary nature of the mental health data (yes/no) and the limited sample size. The binary
+                classification oversimplifies the complexities and severity of mental health conditions, while the
+                skewed distribution of CGPAs towards higher values (3.0 to 3.75) reduces the variability needed to
+                detect significant patterns. Additionally, academic performance is influenced by numerous factors,
+                including personal circumstances, support systems, and teaching quality, which were not accounted for in
+                the dataset. These confounding variables can obscure any potential direct relationship between mental
+                health and academic performance.
+            </p>
+        </div>
+        <div>
+            <h3 class="text-xl font-semibold mb-2">Gibt es Unterschiede in der akademischen Leistung (CGPA) zwischen
+                männlichen und weiblichen Studierenden, die unter Depression oder Angstzuständen leiden?</h3>
+            <p>
+                Die CGPA-Analyse nach Jahr und Geschlecht zeigt, dass es keine konsistenten Unterschiede in der
+                akademischen Leistung zwischen männlichen und weiblichen Studierenden gibt, die unter Depression oder
+                Angstzuständen leiden.
+            </p>
+        </div>
+        <div>
+            <h3 class="text-xl font-semibold mb-2">Gibt es Unterschiede in der Häufigkeit von Depression und
+                Angstzuständen unter Studierenden mit hoher versus niedriger akademischer Leistung (CGPA)?</h3>
+            <p>
+                Die Chi-Quadrat-Testanalyse zeigt keinen signifikanten Zusammenhang zwischen der Häufigkeit von
+                Depression und Angstzuständen und der akademischen Leistung der Studierenden.
+            </p>
+        </div>
+    </div>
 </div>
+
+<!-- Modals -->
+<div id="overlay" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden"></div>
+
+<div id="ageDistributionModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Age Distribution</h2>
+            {% if age_distribution_plot %}
+                <img class="w-full" src="data:image/png;base64,{{ age_distribution_plot }}" alt="Age Distribution">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="genderDistributionModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Gender Distribution</h2>
+            {% if gender_distribution_plot %}
+                <img class="w-full" src="data:image/png;base64,{{ gender_distribution_plot }}"
+                     alt="Gender Distribution">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="studyPerYearModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Study Per Year</h2>
+            {% if study_per_year_distribution_plot %}
+                <img class="w-full" src="data:image/png;base64,{{ study_per_year_distribution_plot }}"
+                     alt="Study Per Year">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="anxietyByDepressionModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Anxiety by Depression</h2>
+            {% if anxiety_by_depression_plot %}
+                <img class="w-full" src="data:image/png;base64,{{ anxiety_by_depression_plot }}"
+                     alt="Anxiety by Depression">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="anxietyByGenderModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Anxiety by Gender</h2>
+            {% if anxiety_by_gender_plot %}
+                <img class="w-full" src="data:image/png;base64,{{ anxiety_by_gender_plot }}"
+                     alt="Anxiety by Gender">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="anxietyByStudyYearModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Anxiety by Study Year</h2>
+            {% if anxiety_by_study_year_plot %}
+                <img class="w-full" src="data:image/png;base64,{{ anxiety_by_study_year_plot }}"
+                     alt="Anxiety by Study Year">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="depressionByStudyYearModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Depression by Study Year</h2>
+            {% if depression_by_study_year_plot %}
+                <img class="w-full" src="data:image/png;base64,{{ depression_by_study_year_plot }}"
+                     alt="Depression by Study Year">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Depression vs CGPA Modal -->
+<div id="depressionVsCgpaModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Effect of Depression on CGPA</h2>
+            {% if depression_vs_cgpa %}
+                <img class="w-full" src="data:image/png;base64,{{ depression_vs_cgpa }}"
+                     alt="Effect of Depression on CGPA">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Anxiety vs CGPA Modal -->
+<div id="anxietyVsCgpaModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Effect of Anxiety on CGPA</h2>
+            {% if anxiety_vs_cgpa %}
+                <img class="w-full" src="data:image/png;base64,{{ anxiety_vs_cgpa }}" alt="Effect of Anxiety on CGPA">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Gender Depression vs CGPA Modal -->
+<div id="genderDepressionVsCgpaModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Gender Differences in CGPA with Depression</h2>
+            {% if gender_depression_vs_cgpa %}
+                <img class="w-full" src="data:image/png;base64,{{ gender_depression_vs_cgpa }}"
+                     alt="Gender Differences in CGPA with Depression">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Gender Anxiety vs CGPA Modal -->
+<div id="genderAnxietyVsCgpaModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Gender Differences in CGPA with Anxiety</h2>
+            {% if gender_anxiety_vs_cgpa %}
+                <img class="w-full" src="data:image/png;base64,{{ gender_anxiety_vs_cgpa }}"
+                     alt="Gender Differences in CGPA with Anxiety">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- High CGPA Depression Modal -->
+<div id="highCgpaDepressionModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Depression Prevalence in High CGPA Students</h2>
+            {% if high_cgpa_depression %}
+                <img class="w-full" src="data:image/png;base64,{{ high_cgpa_depression }}"
+                     alt="Depression Prevalence in High CGPA Students">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Low CGPA Depression Modal -->
+<div id="lowCgpaDepressionModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Depression Prevalence in Low CGPA Students</h2>
+            {% if low_cgpa_depression %}
+                <img class="w-full" src="data:image/png;base64,{{ low_cgpa_depression }}"
+                     alt="Depression Prevalence in Low CGPA Students">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- High CGPA Anxiety Modal -->
+<div id="highCgpaAnxietyModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Anxiety Prevalence in High CGPA Students</h2>
+            {% if high_cgpa_anxiety %}
+                <img class="w-full" src="data:image/png;base64,{{ high_cgpa_anxiety }}"
+                     alt="Anxiety Prevalence in High CGPA Students">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Low CGPA Anxiety Modal -->
+<div id="lowCgpaAnxietyModal" class="modal fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto my-auto">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Anxiety Prevalence in Low CGPA Students</h2>
+            {% if low_cgpa_anxiety %}
+                <img class="w-full" src="data:image/png;base64,{{ low_cgpa_anxiety }}"
+                     alt="Anxiety Prevalence in Low CGPA Students">
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded" data-close-button>Close</button>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
